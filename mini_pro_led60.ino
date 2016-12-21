@@ -37,82 +37,97 @@ void setup()
     strip.setBrightness(0xb0);
 
     static int state = 0;
-    
-//    while(1)
-//    {
-//      static int j = 0;
-//      strip.setPixelColor(j, red, blue, green);       //red/blue/green
-//
-//      
-//      
-//      delay(10);
-//      strip.show();
-//      j = ++j % LED_CNT;
-//      if((LED_CNT - 1 ) == j)
-//      {        
-//          int temp = 0;
-//          temp = red;
-//          red = green;
-//          green = blue;
-//          blue = temp;        
-//      }
-//    }
 
-  int front_cnt = 0;
+    //    while(1)
+    //    {
+    //      static int j = 0;
+    //      strip.setPixelColor(j, red, blue, green);       //red/blue/green
+    //
+    //
+    //
+    //      delay(10);
+    //      strip.show();
+    //      j = ++j % LED_CNT;
+    //      if((LED_CNT - 1 ) == j)
+    //      {
+    //          int temp = 0;
+    //          temp = red;
+    //          red = green;
+    //          green = blue;
+    //          blue = temp;
+    //      }
+    //    }
+
+    int front_cnt = 0;
 
 #define LOW_YEL        5
 #define UP_YEL        (LED_CNT - 5)
 #define LO_WHT        24
 #define HI_WHT        35
-  while(1)
-  {
-    for(int j = 0; j < LED_CNT; j++)
+    while(1)
     {
-      if(j < LOW_YEL || j > UP_YEL )
-      {
-        if(state)
+        for(int j = 0; j < LED_CNT; j++)
         {
-          strip.setPixelColor(j, yellow_clr);  
-        }else {
-          strip.setPixelColor(j, off_clr);  
+            if(j < LOW_YEL || j > UP_YEL )
+            {
+                if(state)
+                {
+                    strip.setPixelColor(j, yellow_clr);
+                }else {
+                    strip.setPixelColor(j, off_clr);
+                }
+                continue;
+            }
+
+            if(j > LO_WHT && j < HI_WHT)
+            {
+                //static int state_loc = 0;
+
+                if(front_cnt % 3)
+                {
+                    strip.setPixelColor(j, off_clr);
+                }else
+                {
+                    strip.setPixelColor(j, white_clr);
+                }
+            }
+
+            if(((j > LOW_YEL) && j < (LO_WHT + 1)))
+            {
+                switch(front_cnt)
+                {
+                    default:
+                        strip.setPixelColor(j, off_clr);
+                        continue;
+                    case 1:
+                        strip.setPixelColor(j, red_clr);
+                        continue;
+                    case 5:
+                        strip.setPixelColor(j, grn_clr);
+                        continue;
+                }
+            }
+            if((j > (HI_WHT - 1)) && j < UP_YEL)
+            {
+                switch(front_cnt)
+                {
+                    default:
+                        strip.setPixelColor(j, off_clr);
+                        continue;
+                    case 2:
+                        strip.setPixelColor(j, grn_clr);
+                        continue;
+                    case 6:
+                        strip.setPixelColor(j, red_clr);
+                        continue;
+                }
+            }
         }
-        continue;  
-      }
-
-      if(j > LO_WHT && j < HI_WHT)         
-      {
-        //static int state_loc = 0;
-
-        if(front_cnt % 3)
-        {
-          strip.setPixelColor(j, off_clr);  
-        }else
-        {
-            strip.setPixelColor(j, white_clr);  
-        }
-      }
-
-      if(((j > LOW_YEL) && j < (LO_WHT + 1)) || ((j > (HI_WHT - 1)) && j < UP_YEL))
-      {
-          switch(front_cnt)
-          {
-            default:
-              strip.setPixelColor(j, off_clr);                
-              continue;
-            case 1:
-              strip.setPixelColor(j, red_clr);                
-              continue;
-            case 5:
-              strip.setPixelColor(j, grn_clr);
-              continue;            
-          }
-      }
+        delay(100);
+        strip.show();
+        state ^= 1;
+        front_cnt = ++front_cnt % 8;
     }
-      delay(100);
-      strip.show();
-      state ^= 1;
-      front_cnt = ++front_cnt % 8;
-  }
 }
 
 void loop()
