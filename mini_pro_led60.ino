@@ -92,7 +92,7 @@ void setup()
                 }
             }
 
-            if(((j > LOW_YEL) && j < (LO_WHT + 1)))
+            if(j >= LOW_YEL && j <= LO_WHT)
             {
                 switch(front_cnt)
                 {
@@ -100,14 +100,16 @@ void setup()
                         strip.setPixelColor(j, off_clr);
                         continue;
                     case 1:
-                        strip.setPixelColor(j, red_clr);
+                        if(j & 1)
+                          strip.setPixelColor(j, red_clr);
                         continue;
                     case 5:
-                        strip.setPixelColor(j, grn_clr);
+                        if(!(j & 1))
+                          strip.setPixelColor(j, grn_clr);
                         continue;
                 }
             }
-            if((j > (HI_WHT - 1)) && j < UP_YEL)
+            if(j >= HI_WHT && j <= UP_YEL)
             {
                 switch(front_cnt)
                 {
@@ -115,9 +117,11 @@ void setup()
                         strip.setPixelColor(j, off_clr);
                         continue;
                     case 2:
-                        strip.setPixelColor(j, grn_clr);
+                        if(j & 1)
+                          strip.setPixelColor(j, grn_clr);
                         continue;
                     case 6:
+                      if(!(j & 1))
                         strip.setPixelColor(j, red_clr);
                         continue;
                 }
