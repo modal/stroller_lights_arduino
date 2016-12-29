@@ -60,10 +60,10 @@ void setup()
 
     int front_cnt = 0;
 
-#define LOW_YEL        5
-#define UP_YEL        (LED_CNT - 5)
-#define LO_WHT        24
-#define HI_WHT        35
+#define LOW_YEL        2
+#define UP_YEL        (LED_CNT - LOW_YEL)
+#define LO_WHT        26
+#define HI_WHT        33
     while(1)
     {
         for(int j = 0; j < LED_CNT; j++)
@@ -100,15 +100,20 @@ void setup()
                         strip.setPixelColor(j, off_clr);
                         continue;
                     case 1:
+                    case 2:
+                    case 3:
                         if(j & 1)
                           strip.setPixelColor(j, red_clr);
                         continue;
                     case 5:
+                    case 6:
+                    case 7:
                         if(!(j & 1))
                           strip.setPixelColor(j, grn_clr);
                         continue;
                 }
             }
+
             if(j >= HI_WHT && j <= UP_YEL)
             {
                 switch(front_cnt)
@@ -116,11 +121,15 @@ void setup()
                     default:
                         strip.setPixelColor(j, off_clr);
                         continue;
+                    case 1:
                     case 2:
+                    case 3:
                         if(j & 1)
                           strip.setPixelColor(j, grn_clr);
                         continue;
+                    case 5:
                     case 6:
+                    case 7:
                       if(!(j & 1))
                         strip.setPixelColor(j, red_clr);
                         continue;
